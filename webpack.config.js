@@ -1,15 +1,17 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// ツールの中の{xxx}クラスを読み込む
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   // ビルド元
-  entry: './src/index.js',
+  entry: './src/javascripts/main.js',
 
   // 出力先
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'main.js',
+    filename: './javascript/main.js', //ファイルパス
   },
 
   // モジュール仕様
@@ -41,10 +43,14 @@ module.exports = {
   // プラグイン仕様
   plugins: [
     // cssを別ファイル出力。module.loaderも変更する必要あり
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: './stylesheets/main.css', // build後のcssファイルパス
+    }),
     // htmlファイル出力
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/templates/index.html', // テンプレートファイル指定
     }),
+    // dist内を一回削除し、buildが走る
+    new CleanWebpackPlugin(),
   ],
 };
