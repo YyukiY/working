@@ -1,4 +1,6 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // ビルド元
@@ -10,21 +12,22 @@ module.exports = {
     filename: 'main.js',
   },
 
-  // モジュール毎の追加
+  // モジュール仕様
   module: {
-    // ファイル毎の仕様設定
+    // ファイル仕様
     rules: [
       {
         // ファイル名の検知
         test: /\.css/,
-        // .cssファイルが以下のルールに従う
+        // .cssファイルを検知したときの設定
         use: [
           /**
            * ！-- loaderは下から読み込まれる --！
            */
           {
             // 読み込んだstyleを適用する
-            loader: 'style-loader',
+            // loader: 'style-loader',	// インラインcss
+            loader: MiniCssExtractPlugin.loader, // css別ファイル化
           },
           {
             // .cssファイルをjsに読み込む
@@ -34,4 +37,14 @@ module.exports = {
       },
     ],
   },
+
+  // プラグイン仕様
+  plugins: [
+    // cssを別ファイル出力。module.loaderも変更する必要あり
+    new MiniCssExtractPlugin(),
+    // htmlファイル出力
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
 };
