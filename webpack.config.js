@@ -7,7 +7,7 @@ module.exports = {
   // 出力先
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'index.js',
+    filename: 'main.js',
   },
 
   // モジュール毎の追加
@@ -19,7 +19,15 @@ module.exports = {
         test: /\.css/,
         // .cssファイルが以下のルールに従う
         use: [
+          /**
+           * ！-- loaderは下から読み込まれる --！
+           */
           {
+            // 読み込んだstyleを適用する
+            loader: 'style-loader',
+          },
+          {
+            // .cssファイルをjsに読み込む
             loader: 'css-loader',
           },
         ],
