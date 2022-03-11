@@ -39,9 +39,14 @@ module.exports = {
         ],
       },
       {
-        // 画像扱い時の設定(html)
+        // 画像ハンドリング
         test: /\.(png|jpg)/,
+        type: 'asset/resource', // webpack5から使用可能
+        generator: {
+          filename: 'images/[name][ext]', // [ext] = . + 拡張子
+        },
         use: [
+          /*	sebpack5から↑assetで対応可能
           {
             // htmlファイルに画像urlをloadする。
             // loader: 'url-loader',	// 容量もコードも多くなるので非推奨
@@ -51,6 +56,7 @@ module.exports = {
               name: 'images/[name].[ext]', //ファイルネームそのまま
             },
           },
+					*/
         ],
       },
     ],
