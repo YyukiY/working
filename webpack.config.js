@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // ツールの中の{xxx}クラスを読み込む
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { loader } = require('mini-css-extract-plugin');
 
 module.exports = {
   // ビルド元
@@ -34,6 +35,21 @@ module.exports = {
           {
             // .cssファイルをjsに読み込む
             loader: 'css-loader',
+          },
+        ],
+      },
+      {
+        // 画像扱い時の設定(html)
+        test: /\.(png|jpg)/,
+        use: [
+          {
+            // htmlファイルに画像urlをloadする。
+            // loader: 'url-loader',	// 容量もコードも多くなるので非推奨
+            loader: 'file-loader', // 推奨 : dist画像ファイルへ
+            options: {
+              esModule: false,
+              name: 'images/[name].[ext]', //ファイルネームそのまま
+            },
           },
         ],
       },
