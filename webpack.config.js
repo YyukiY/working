@@ -59,6 +59,21 @@ module.exports = {
 					*/
         ],
       },
+      {
+        test: /\.pug/,
+        use: [
+          // loader の処理は下から先に
+          {
+            loader: 'html-loader',
+          },
+          {
+            loader: 'pug-html-loader',
+            options: {
+              pretty: true,
+            },
+          },
+        ],
+      },
     ],
   },
 
@@ -70,7 +85,14 @@ module.exports = {
     }),
     // htmlファイル出力
     new HtmlWebpackPlugin({
-      template: './src/templates/index.html', // テンプレートファイル指定
+      // template: './src/templates/index.html', // テンプレートファイル指定
+      template: './src/templates/index.pug', // テンプレートファイル指定
+      filename: 'index.html', // 出力
+    }),
+    new HtmlWebpackPlugin({
+      // template: './src/templates/index.html', // テンプレートファイル指定
+      template: './src/templates/access.pug', // テンプレートファイル指定
+      filename: 'access.html',
     }),
     // dist内を一回削除し、buildが走る
     new CleanWebpackPlugin(),
