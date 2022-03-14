@@ -21,7 +21,7 @@ module.exports = {
     rules: [
       {
         // ファイル名の検知
-        test: /\.css/,
+        test: /\.(css|sass|scss)/,
         // .cssファイルを検知したときの設定
         use: [
           /**
@@ -35,6 +35,9 @@ module.exports = {
           {
             // .cssファイルをjsに読み込む
             loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
           },
         ],
       },
@@ -93,6 +96,11 @@ module.exports = {
       // template: './src/templates/index.html', // テンプレートファイル指定
       template: './src/templates/access.pug', // テンプレートファイル指定
       filename: 'access.html',
+    }),
+    new HtmlWebpackPlugin({
+      // template: './src/templates/index.html', // テンプレートファイル指定
+      template: './src/templates/members/taro.pug', // テンプレートファイル指定
+      filename: 'members/taro.html',
     }),
     // dist内を一回削除し、buildが走る
     new CleanWebpackPlugin(),
